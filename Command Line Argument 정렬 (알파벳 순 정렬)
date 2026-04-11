@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+/* 4.c: Command Line Arguments를 알파벳 순으로 정렬하는 프로그램 */
+int main(int argc, char *argv[]) {
+    int i, j;
+    char *temp;
+
+    // 정렬 전 출력 (argv[0]은 프로그램 이름이므로 1부터 시작)
+    printf("Before sorting:\n");
+    for (i = 1; i < argc; i++) {
+        printf("%s ", argv[i]);
+    }
+    printf("\n");
+
+    // 버블 정렬 알고리즘을 이용한 문자열 정렬
+    for (i = 1; i < argc - 1; i++) {
+        for (j = i + 1; j < argc; j++) {
+            // strcmp 결과가 0보다 크면 앞의 문자열이 알파벳 순으로 뒤에 있음
+            if (strcmp(argv[i], argv[j]) > 0) {
+                // 포인터 주소만 서로 교환 (실제 문자열 복사보다 효율적)
+                temp = argv[i];
+                argv[i] = argv[j];
+                argv[j] = temp;
+            }
+        }
+    }
+
+    // 정렬 후 출력
+    printf("After sorting (Alphabetical):\n");
+    for (i = 1; i < argc; i++) {
+        printf("%s ", argv[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
