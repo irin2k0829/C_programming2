@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+/* 4.c: 유클리드 호제법을 이용한 최대공약수(GCD) 구하기
+ * 두 수를 나누어 나머지가 0이 될 때까지 반복하는 방식
+ */
+
+int main() {
+    int n1, n2, a, b, temp;
+
+    printf("두 개의 정수를 입력하시오: ");
+    // scanf로 두 정수를 입력받음
+    if (scanf("%d %d", &n1, &n2) != 2) {
+        return 1; 
+    }
+
+    a = n1;
+    b = n2;
+
+    // 유클리드 호제법 로직
+    while (b != 0) {
+        temp = a % b;
+        a = b;
+        b = temp;
+    }
+
+    // 결과 출력 (최종적으로 a에 GCD가 남음)
+    printf("입력된 두 수: %d, %d\n", n1, n2);
+    printf("최대공약수(GCD): %d\n", a);
+
+    return 0;
+}
