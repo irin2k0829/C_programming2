@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+/* * 3번 문제 예상: Recursive function call을 이용한 n! 계산
+ * 핵심: 자기 자신을 호출하는 구조와 종료 조건(base case) 설정
+ */
+
+// 팩토리얼을 계산하는 재귀 함수
+// 큰 숫자를 처리하기 위해 unsigned long long 타입 사용 추천
+unsigned long long factorial(int n) {
+    if (n <= 1) // 종료 조건: 0! 또는 1!은 1
+        return 1;
+    else
+        // n! = n * (n-1)! 원리 이용
+        return n * factorial(n - 1);
+}
+
+int main() {
+    int i;
+    
+    printf("n! calculation (from 2 to 15):\n");
+    
+    // 기출에서 보통 특정 범위(예: 2~15)를 출력하라고 함
+    for (i = 2; i <= 15; i++) {
+        printf("%2d! = %llu\n", i, factorial(i));
+    }
+    
+    return 0;
+}
