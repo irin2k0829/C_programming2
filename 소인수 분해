@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+/* 5.c: 정수를 입력받아 소인수 분해(Prime Factorization) 결과를 출력 */
+int main() {
+    int n, i;
+
+    printf("정수를 입력하시오: ");
+    if (scanf("%d", &n) != 1) return 1;
+
+    printf("%d = ", n);
+
+    // 2부터 시작하여 나누어 떨어지는지 확인 (KRC-03 Control Flow 응용)
+    for (i = 2; n > 1; i++) {
+        while (n % i == 0) {
+            printf("%d", i);
+            n /= i;
+            if (n > 1) printf(" * "); // 마지막 인수가 아니면 곱셈 기호 표시
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
