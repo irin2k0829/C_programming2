@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+/* 3.c: 재귀 함수를 이용한 팩토리얼 계산 */
+
+// 재귀적으로 n!을 계산하는 함수
+unsigned long long factorial(int n) {
+    if (n <= 1) // Base case: 0!과 1!은 1
+        return 1;
+    else
+        // Recursive step: n * (n-1)!
+        return (unsigned long long)n * factorial(n - 1);
+}
+
+int main() {
+    int i;
+    
+    // 1!부터 20!까지 루프를 돌며 출력
+    for (i = 1; i <= 20; i++) {
+        // %llu는 unsigned long long 출력을 위한 서식 지정자
+        printf("%2d! = %llu\n", i, factorial(i));
+    }
+    
+    return 0;
+}
