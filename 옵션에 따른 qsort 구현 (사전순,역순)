@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+/* 함수 프로토타입 선언 */
+void my_qsort(char *v[], int left, int right, int (*comp)(const char *, const char *));
+void swap(char *v[], int i, int j);
+
+/* 6.c: -r 옵션 여부에 따라 사전순 또는 역순으로 정렬하는 프로그램 */
+int main(int argc, char *argv[]) {
+    int reverse = 0; // 역순 정렬 여부 플래그
+    int start_idx = 1;
+
+    // 1. 커맨드 라인 인자에서 옵션 확인
+    if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+        reverse = 1;    // -r 옵션이 있으면 역순 모드
+        start_idx = 2;  // 실제 단어는 argv[2]부터 시작
+    }
+
+    if (argc <= start_idx) {
+        printf("Usage: ./6 [-r] word1 word2 ...\n");
+        return 1;
+    }
+
+    // 2. 직접 구현한 my_qsort 호출
+    // reverse가 1이면 역순 정렬을 위해 비교 로직을 내부에서 판단함
+    // 여기서는 기본 strcmp를 넘겨주고, qsort 내부에서 reverse 값에 따라 처리
+    my_qsort(argv, start_idx, argc - 1, strcmp);
+
+    // 3. 결과 출력
+    printf("Sorted result:\n");
+    if (reverse) {
+        // 역순 옵션이 있으면 정렬된 결과를 거꾸로 출력하거나, 
+        // qsort 내부 비교 로직을 반대로 하면 됩니다. (여기선 출력 제어 방식)
+        for (int i = argc - 1; i >= start_idx; i--) printf("%s ", argv[i]);
+    } else {
+        for (int i = start_idx; i < argc; i++) printf("%s ", argv[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+/* 퀵 정렬 알고리즘 직접 구현 */
+void my_qsort(char *v[], int left, int right, int (*comp)(const char *, const char *)) {
+    int i, last;
+
+    if (left >= right) return; // 요소가 1개 미만이면 종료
+
+    swap(v, left, (left + right) / 2); // 피벗 선택
+    last = left;
+
+    for (i = left + 1; i <= right; i++) {
+        // 함수 포인터 comp(strcmp)를 사용하여 문자열 비교
+        if ((*comp)(v[i], v[left]) < 0) {
+            swap(v, ++last, i);
+        }
+    }
+    swap(v, left, last);
+    my_qsort(v, left, last - 1, comp);
+    my_qsort(v, last + 1, right, comp);
+}
+
+/* 두 포인터의 위치를 바꾸는 함수 */
+void swap(char *v[], int i, int j) {
+    char *temp;
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
