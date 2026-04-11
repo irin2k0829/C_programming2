@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+#define IN  1  /* 단어 안쪽임을 표시 */
+#define OUT 0  /* 단어 바깥쪽임을 표시 */
+
+int main() {
+    int c, nl, nw, nc, state;
+
+    state = OUT; // 처음 시작은 단어 밖
+    nl = nw = nc = 0; // 줄, 단어, 글자 수 초기화
+
+    // 입력의 끝(^D)이 올 때까지 반복해서 한 글자씩 읽음
+    while ((c = getchar()) != EOF) {
+        ++nc; // 어떤 글자든 들어오면 글자 수 증가
+        
+        if (c == '\n') // 줄 바꿈 글자면 줄 수 증가
+            ++nl;
+            
+        // 공백, 줄바꿈, 탭이면 단어 밖으로 판정
+        if (c == ' ' || c == '\n' || c == '\t')
+            state = OUT;
+        // 위 문자들이 아닌데 이전 상태가 OUT이었다면, 새로운 단어 시작
+        else if (state == OUT) {
+            state = IN;
+            ++nw; // 단어 수 증가
+        }
+    }
+    // 결과 출력 (줄 수, 단어 수, 글자 수 순서)
+    printf("%d %d %d\n", nl, nw, nc);
+
+    return 0;
+}
