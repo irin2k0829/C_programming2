@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <ctype.h>
+
+/* 7.c: 입력된 문자열에서 알파벳(대소문자 통합)과 그 외 문자의 개수 계산 */
+int main() {
+    int c;
+    int alpha_count = 0;
+    int other_count = 0;
+
+    // 입력의 끝은 ^D(EOF)로 판단
+    while ((c = getchar()) != EOF) {
+        if (c == '\n') continue; // 줄바꿈은 개수에서 제외 (선택 사항)
+
+        if (isalpha(c)) {
+            alpha_count++; // 알파벳인 경우
+        } else {
+            other_count++; // 숫자, 기호, 공백 등 기타 문자인 경우
+        }
+    }
+
+    printf("알파벳 글자수: %d\n", alpha_count);
+    printf("기타 문자수: %d\n", other_count);
+
+    return 0;
+}
