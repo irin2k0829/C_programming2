@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int a[][5] = {
+        { 1, 2, 3, 4, 5 },
+        { 6, 7, 8, 9, 10 },
+        { 11, 12, 13, 14, 15 },
+        { 16, 17, 18, 19, 20 },
+        { 21, 22, 23, 24, 25 }
+    };
+
+    int i, j;
+    double rowSum, rowAvg;
+    double colSum[5] = {0};
+    double colAvg[5];
+    double totalSum = 0.0;
+    double totalAvg;
+
+    /* 각 행 출력 + row 합/평균 계산 */
+    for (i = 0; i < 5; i++) {
+        rowSum = 0.0;
+
+        for (j = 0; j < 5; j++) {
+            printf("%7.2f", (double)a[i][j]);
+            rowSum += a[i][j];
+            colSum[j] += a[i][j];
+            totalSum += a[i][j];
+        }
+
+        rowAvg = rowSum / 5.0;
+        printf("%7.2f%7.2f\n", rowSum, rowAvg);
+    }
+
+    /* column 합 출력 + 전체 합 출력 */
+    for (j = 0; j < 5; j++) {
+        printf("%7.2f", colSum[j]);
+        colAvg[j] = colSum[j] / 5.0;
+    }
+    printf("%7.2f\n", totalSum);
+
+    /* column 평균 출력 */
+    for (j = 0; j < 5; j++) {
+        printf("%7.2f", colAvg[j]);
+    }
+
+    totalAvg = totalSum / 25.0;
+
+    /* row 합 자리 비워두고 전체 평균 출력 */
+    printf("%7s%7.2f\n", "", totalAvg);
+
+    return 0;
+}
