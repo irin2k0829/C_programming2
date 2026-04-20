@@ -1,34 +1,38 @@
 #include <stdio.h>
 
-int main() {
+int main(void)
+{
     char op;
-    double num1, num2;
+    double num;
+    double result = 0.0;
 
-    // 루프를 돌며 연산자와 숫자 두 개를 입력받음
-    // 입력 형식이 "+ 10 20" 형태일 때를 가정
-    printf("Enter operator and two numbers (ex: + 10 5, ^D to exit):\n");
-    
-    while (scanf(" %c %lf %lf", &op, &num1, &num2) == 3) {
+    /* EOF가 나올 때까지 연산자와 숫자 하나를 입력받음 */
+    while (scanf(" %c %lf", &op, &num) == 2) {
         switch (op) {
             case '+':
-                printf("%.2f + %.2f = %.2f\n", num1, num2, num1 + num2);
+                result += num;
                 break;
             case '-':
-                printf("%.2f - %.2f = %.2f\n", num1, num2, num1 - num2);
+                result -= num;
                 break;
             case '*':
-                printf("%.2f * %.2f = %.2f\n", num1, num2, num1 * num2);
+                result *= num;
                 break;
             case '/':
-                if (num2 != 0)
-                    printf("%.2f / %.2f = %.2f\n", num1, num2, num1 / num2);
-                else
-                    printf("Error: Division by zero!\n");
+                if (num != 0)
+                    result /= num;
+                else {
+                    printf("division by zero\n");
+                    continue;
+                }
                 break;
             default:
-                printf("Unknown operator: %c\n", op);
+                printf("unknown operator\n");
+                continue;
         }
-        printf("Next input: ");
+
+        printf("%g\n", result);
     }
+
     return 0;
 }
