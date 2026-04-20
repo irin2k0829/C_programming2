@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int num, temp, i = 0;
+    int oct[100];
+
+    scanf("%d", &num);
+
+    if (num == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    temp = num;
+    while (temp > 0) {
+        oct[i] = temp % 8;
+        temp /= 8;
+        i++;
+    }
+
+    for (i = i - 1; i >= 0; i--)
+        printf("%d", oct[i]);
+
+    printf("\n");
+    return 0;
+}
