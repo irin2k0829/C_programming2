@@ -1,26 +1,91 @@
 #include <stdio.h>
 #include <string.h>
 
-/* 4.c: argv로 입력된 문자열 정렬 */
-int main(int argc, char *argv[]) {
-    int i, j;
-    char *temp;
+/* 문자열 포인터 두 개의 위치를 바꾸는 함수 */
+void swap(char **v, int i, int j);
 
-    if (argc < 2) return 1;
+/* 문자열 배열을 정렬하는 함수
+   reverse = 0 이면 오름차순
+   reverse = 1 이면 내림차순 */
+void myqsort(char **v, int left, int right, int reverse);
 
-    // 버블 정렬
-    for (i = 1; i < argc - 1; i++) {
-        for (j = i + 1; j < argc; j++) {
-            // 알파벳 순: strcmp > 0 / 역순: strcmp < 0
-            if (strcmp(argv[i], argv[j]) > 0) { 
-                temp = argv[i];
-                argv[i] = argv[j];
-                argv[j] = temp;
-            }
+/* 정렬된 문자열들을 한 줄에 출력하는 함수 */
+void writelines(char **v, int n);
+
+int main(int argc, char **argv)
+{
+    int n;          /* 정렬할 단어 개수 */
+    int reverse;    /* -r 옵션 여부 */
+    char **a;       /* 실제 정렬할 문자열 시작 위치 */
+
+    reverse = 0;
+
+    /* -r 옵션이 있으면 argv[2]부터가 실제 단어들 */
+    if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+        reverse = 1;
+        a = argv + 2;
+        n = argc - 2;
+    }
+    else {
+        a = argv + 1;
+        n = argc - 1;
+    }
+
+    /* 단어가 1개 이상 있으면 정렬 */
+    if (n > 0)
+        myqsort(a, 0, n - 1, reverse);
+
+    /* 결과 출력 */
+    writelines(a, n);
+
+    return 0;
+}
+
+void writelines(char **v, int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++) {
+        printf("%s", v[i]);
+        if (i < n - 1)
+            printf(" ");
+    }
+    printf("\n");
+}
+
+void myqsort(char **v, int left, int right, int reverse)
+{
+    int i, last;
+
+    if (left >= right)
+        return;
+
+    swap(v, left, (left + right) / 2);
+    last = left;
+
+    for (i = left + 1; i <= right; i++) {
+        if (!reverse) {
+            /* 오름차순 */
+            if (strcmp(v[i], v[left]) < 0)
+                swap(v, ++last, i);
+        }
+        else {
+            /* 내림차순 */
+            if (strcmp(v[i], v[left]) > 0)
+                swap(v, ++last, i);
         }
     }
 
-    for (i = 1; i < argc; i++) printf("%s ", argv[i]);
-    printf("\n");
-    return 0;
+    swap(v, left, last);
+    myqsort(v, left, last - 1, reverse);
+    myqsort(v, last + 1, right, reverse);
+}
+
+void swap(char **v, int i, int j)
+{
+    char *temp;
+
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
 }
