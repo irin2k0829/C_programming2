@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int c;
+    int alpha[26] = {0};
+    int others = 0;
+    int i;
+
+    /* EOF가 나올 때까지 문자 입력받기 */
+    while ((c = getchar()) != EOF) {
+        if (c >= 'A' && c <= 'Z')
+            alpha[c - 'A']++;
+        else if (c >= 'a' && c <= 'z')
+            alpha[c - 'a']++;
+        else
+            others++;
+    }
+
+    /* 개수가 1개 이상인 알파벳만 출력 */
+    for (i = 0; i < 26; i++) {
+        if (alpha[i] > 0)
+            printf("%c/%c count: %d\n", 'A' + i, 'a' + i, alpha[i]);
+    }
+
+    printf("Others: %d\n", others);
+
+    return 0;
+}
