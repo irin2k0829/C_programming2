@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int num, temp, i = 0;
+    char hex[100];
+
+    scanf("%d", &num);
+
+    if (num == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    temp = num;
+    while (temp > 0) {
+        int r = temp % 16;
+
+        if (r < 10)
+            hex[i] = r + '0';
+        else
+            hex[i] = r - 10 + 'A';
+
+        temp /= 16;
+        i++;
+    }
+
+    for (i = i - 1; i >= 0; i--)
+        printf("%c", hex[i]);
+
+    printf("\n");
+    return 0;
+}
