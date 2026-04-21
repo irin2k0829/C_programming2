@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+/* 이진 탐색 함수 */
+int binsearch(int x, int v[], int n)
+{
+    int low, high, mid;
+
+    low = 0;
+    high = n - 1;
+
+    while (low <= high) {
+        mid = (low + high) / 2;  /* 중간 위치 계산 */
+
+        if (x < v[mid])
+            high = mid - 1;      /* 왼쪽 구간 탐색 */
+        else if (x > v[mid])
+            low = mid + 1;       /* 오른쪽 구간 탐색 */
+        else
+            return mid;          /* 찾은 경우 인덱스 반환 */
+    }
+
+    return -1;                   /* 못 찾은 경우 */
+}
+
+int main(void)
+{
+    int a[10] = {11, 22, 33, 44, 55, 66, 77, 88, 99, 100};
+    int k;
+
+    k = 20;
+    if (binsearch(k, a, 10) >= 0)
+        printf("%d is in a[].\n", k);
+    else
+        printf("%d is not in a[].\n", k);
+
+    k = 22;
+    if (binsearch(k, a, 10) >= 0)
+        printf("%d is in a[].\n", k);
+    else
+        printf("%d is not in a[].\n", k);
+
+    return 0;
+}
