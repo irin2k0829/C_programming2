@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+/* 셸 정렬 함수 */
+void shellsort(int v[], int n)
+{
+    int gap, i, j, temp;
+
+    /* gap을 점점 줄여가며 정렬 */
+    for (gap = n / 2; gap > 0; gap /= 2) {
+        for (i = gap; i < n; ++i) {
+            for (j = i - gap; j >= 0 && v[j] > v[j + gap]; j -= gap) {
+                temp = v[j];
+                v[j] = v[j + gap];
+                v[j + gap] = temp;
+            }
+        }
+    }
+}
+
+int main(void)
+{
+    int a[] = {22, 11, 44, 33, 66, 55, 88, 77, 99};
+    int n = sizeof(a) / sizeof(int);
+    int i;
+
+    printf("Before Sort\n");
+    for (i = 0; i < n; ++i)
+        printf("%4d", a[i]);
+    putchar('\n');
+
+    shellsort(a, n);
+
+    printf("After Sort\n");
+    for (i = 0; i < n; ++i)
+        printf("%4d", a[i]);
+    putchar('\n');
+
+    return 0;
+}
