@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+#define MAXLINE 1000
+
+int get_line(char line[], int maxline);
+void copy(char to[], char from[]);
+
+int main(void)
+{
+    int len;
+    int max;
+    char line[MAXLINE];
+    char longest[MAXLINE];
+
+    max = 0;
+
+    /* 여러 줄 입력받으면서 가장 긴 줄 찾기 */
+    while ((len = get_line(line, MAXLINE)) > 0) {
+        if (len > max) {
+            max = len;
+            copy(longest, line);
+        }
+    }
+
+    /* 가장 긴 줄 출력 */
+    if (max > 0)
+        printf("%s", longest);
+
+    return 0;
+}
+
+/* 한 줄을 읽어서 길이를 반환 */
+int get_line(char s[], int lim)
+{
+    int c, i;
+
+    for (i = 0; i < lim - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+        s[i] = c;
+
+    if (c == '\n') {
+        s[i] = c;
+        ++i;
+    }
+
+    s[i] = '\0';
+    return i;
+}
+
+/* 문자열 복사 함수 */
+void copy(char to[], char from[])
+{
+    int i;
+
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
+}
