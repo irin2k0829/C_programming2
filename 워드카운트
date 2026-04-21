@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+#define IN 1
+#define OUT 0
+
+int main(void)
+{
+    int c, nl, nw, nc, state;
+
+    /* 초기 상태 설정 */
+    state = OUT;
+    nl = 0;
+    nw = 0;
+    nc = 0;
+
+    /* EOF가 나올 때까지 문자 입력 처리 */
+    while ((c = getchar()) != EOF) {
+        ++nc;  /* 문자 수 증가 */
+
+        if (c == '\n')
+            ++nl;  /* 줄 수 증가 */
+
+        if (c == ' ' || c == '\n' || c == '\t')
+            state = OUT;  /* 공백이면 단어 바깥 상태 */
+        else if (state == OUT) {
+            state = IN;   /* 단어 시작 */
+            ++nw;         /* 단어 수 증가 */
+        }
+    }
+
+    printf("%d %d %d\n", nl, nw, nc);
+
+    return 0;
+}
