@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+/* 두 원소의 값을 바꾸는 함수 */
+void swap(int v[], int i, int j)
+{
+    int temp;
+
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+/* 퀵정렬 함수 */
+void qsort(int v[], int left, int right)
+{
+    int i, last;
+
+    if (left >= right)
+        return;  /* 원소가 1개 이하면 종료 */
+
+    /* 가운데 값을 맨 앞으로 보내 pivot처럼 사용 */
+    swap(v, left, (left + right) / 2);
+    last = left;
+
+    /* pivot보다 작은 값들을 왼쪽으로 이동 */
+    for (i = left + 1; i <= right; ++i)
+        if (v[i] < v[left])
+            swap(v, ++last, i);
+
+    /* pivot을 제자리로 이동 */
+    swap(v, left, last);
+
+    /* 왼쪽, 오른쪽 부분 배열 재귀 정렬 */
+    qsort(v, left, last - 1);
+    qsort(v, last + 1, right);
+}
+
+int main(void)
+{
+    int n[] = {12, 3, 4, 6, 10, 9, 56, 0, 54, 13, 7, 30};
+    int i;
+    int size = sizeof(n) / sizeof(int);
+
+    printf("Before sort\n");
+    for (i = 0; i < size; ++i)
+        printf("%d", n[i]);
+    putchar('\n');
+
+    qsort(n, 0, size - 1);
+
+    printf("After sort\n");
+    for (i = 0; i < size; ++i)
+        printf("%d", n[i]);
+    putchar('\n');
+
+    return 0;
+}
