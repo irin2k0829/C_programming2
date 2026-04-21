@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+/* 문자열 숫자를 정수로 바꾸는 함수 */
+int myatoi(char s[])
+{
+    int i = 0;
+    int n = 0;
+
+    while (s[i] >= '0' && s[i] <= '9') {
+        n = n * 10 + (s[i] - '0');
+        ++i;
+    }
+
+    return n;
+}
+
+int main(void)
+{
+    char str1[] = "1234";
+    char str2[] = "4321";
+
+    printf("str %s -> int %d\n", str1, myatoi(str1));
+    printf("str %s -> int %d\n", str2, myatoi(str2));
+
+    return 0;
+}
