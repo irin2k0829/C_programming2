@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int fahr;
+    int cel;
+    int lower, upper, step;
+
+    /* 시작값, 끝값, 증가값 설정 */
+    lower = -20;
+    upper = 100;
+    step = 10;
+
+    /* 섭씨 값을 10씩 증가시키며 화씨로 변환 */
+    for (cel = lower; cel <= upper; cel += step) {
+        fahr = cel * 9 / 5 + 32;
+        printf("%5d\t%5d\n", cel, fahr);
+    }
+
+    return 0;
+}
